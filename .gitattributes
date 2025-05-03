@@ -1,0 +1,43 @@
+# ───────────────────────────────
+# 🧬 Normalize line endings to LF
+# ───────────────────────────────
+* text=auto eol=lf
+
+# ───────────────────────────────
+# 🎨 Prevent diffing binary files
+# ───────────────────────────────
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.mp4 binary
+*.mp3 binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.eot binary
+*.otf binary
+*.pdf binary
+*.zip binary
+*.tar binary
+*.gz binary
+
+# ───────────────────────────────
+# 🧱 TypeScript + Markdown + JSON = UTF-8
+# ───────────────────────────────
+*.ts   text eol=lf
+*.tsx  text eol=lf
+*.js   text eol=lf
+*.json text eol=lf
+*.md   text eol=lf
+*.html text eol=lf
+*.scss text eol=lf
+*.css  text eol=lf
+*.yml  text eol=lf
+*.yaml text eol=lf
+
+# ───────────────────────────────
+# 🛡️ Git LFS (si activé)
+# ───────────────────────────────
+# assets/** filter=lfs diff=lfs merge=lfs -text

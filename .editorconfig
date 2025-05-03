@@ -1,0 +1,34 @@
+# .editorconfig
+# 🛠️ Hard Machine Ready – Convention globale du code
+
+root = true
+
+# 🔤 Tous les fichiers
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 2
+
+# 🔢 JSON (souvent 2 espaces pour liserabilité)
+[*.json]
+indent_size = 2
+
+# 🧾 Markdown (pas de trim des espaces à droite, important dans les listes)
+[*.md]
+trim_trailing_whitespace = false
+indent_size = 2
+
+# 🎨 YAML (tailwind, config Angular, GitHub Actions)
+[*.yml]
+indent_size = 2
+
+# 💅 CSS, SCSS, HTML
+[*.{css,scss,html}]
+indent_size = 2
+
+# 🧠 TypeScript / JavaScript
+[*.{ts,tsx,js,jsx}]
+indent_size = 2
