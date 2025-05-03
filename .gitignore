@@ -1,0 +1,107 @@
+# ───────────────────────────────
+# 🌐 Node Modules
+# ───────────────────────────────
+node_modules/
+**/node_modules/
+
+# ───────────────────────────────
+# 🔧 Build / Compiled Output
+# ───────────────────────────────
+dist/
+build/
+out/
+tmp/
+.temp/
+.tmp/
+.nx/
+.turbo/
+.cache/
+turbo/
+turbo.log
+
+dist/**
+apps/**/dist/
+libs/**/dist/
+
+# Angular build dirs
+apps/ui/out-tsc/
+apps/ui/.angular/
+
+# NestJS build/test output
+apps/api/.nyc_output/
+
+# Angular specific cache
+apps/ui/.angular/cache
+
+# ⛔ Empêche d’ignorer tout le dossier
+!apps/ui/.gitkeep
+!apps/api/.gitkeep
+
+# ───────────────────────────────
+# 🧪 Coverage / Test Results
+# ───────────────────────────────
+coverage/
+**/coverage/
+test-results/
+*.snap
+__snapshots__/
+
+# ───────────────────────────────
+# 🔐 Environment Files
+# ───────────────────────────────
+.env
+.env.*
+*.local
+apps/**/.env
+apps/**/.env.*
+
+# ───────────────────────────────
+# 📚 Logs
+# ───────────────────────────────
+*.log
+*.log.*
+logs
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+report.[0-9]*.json
+
+# ───────────────────────────────
+# 💻 IDEs / Editors
+# ───────────────────────────────
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+.idea/
+*.iml
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-project
+*.sublime-workspace
+
+# ───────────────────────────────
+# ⚙️ Miscellaneous
+# ───────────────────────────────
+.DS_Store
+Thumbs.db
+.history/
+libpeerconnection.log
+connect.lock
+typings/
+*.swp
+*.tmp
+*.bak
+*.seed
+*.pid
+*.pid.lock
+temp/
+*.js
+*.js.map
