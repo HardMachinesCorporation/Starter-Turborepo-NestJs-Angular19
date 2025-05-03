@@ -1,80 +1,101 @@
-# 🗂️ Repo Folder Structure — project-starter
 
-This document describes the folder layout and architectural principles of your monorepo.
+# 🧱 Repository Structure
+
+> Crafted with love by **Jordach & Aegis** from **Hard Machine™**
 
 ---
 
-## 🧱 Core Structure
+## 🎯 Purpose
+
+This file explains the structure and philosophy behind your monorepo, which combines multiple applications (API & UI) with centralized builds, shared logic, and unified tooling.
+
+---
+
+## 📁 Root Folders Overview
 
 ```
 project-starter/
-├── apps/
-│   ├── api/       ← NestJS backend (TypeScript)
-│   └── ui/        ← Angular frontend (v19+)
-├── libs/          ← Shared libraries (optional, reusable logic or models)
-├── dist/          ← Centralized build outputs for all apps and libs
-├── scripts/       ← Custom automation scripts (e.g., Turbo workaround)
-├── package.json   ← Root package definition and scripts
-├── turbo.json     ← Turbo tasks & caching configuration
+├── apps/                 → Main applications (API, UI, etc.)
+├── libs/                 → Shared libraries and utilities
+├── dist/                 → Centralized build outputs
+├── scripts/              → Utilities like `write-touch.js`
+├── .turbo/               → TurboRepo cache and state
+├── .env / .env-example   → Environment variable definitions
 ```
 
 ---
 
-## 📦 Apps
+## ⚙️ apps/
 
-### `apps/api/`
+Contains your applications.
 
-- **Framework**: [NestJS](https://nestjs.com)
-- **Purpose**: Provides the backend services, APIs, and business logic.
-- **Build output**: Written to `dist/apps/api/`.
+| Path        | Tech    | Description                   |
+| ----------- | ------- | ----------------------------- |
+| `apps/api/` | NestJS  | Backend app (REST API)        |
+| `apps/ui/`  | Angular | Frontend app (SPA or CSR/SSR) |
 
-### `apps/ui/`
-
-- **Framework**: [Angular 19](https://angular.io)
-- **Purpose**: Frontend application for users.
-- **Build output**: Written to `dist/apps/ui/browser/`.
+Each app contains its own `src/` with features, config, modules, etc.
 
 ---
 
-## 🧠 Centralized Builds in `dist/`
+## 💾 dist/
 
-Instead of having each app output to its own folder, we centralize all builds under:
+Centralized output for builds.
 
-```
-dist/
-├── apps/
-│   ├── api/         ← NestJS build
-│   └── ui/browser/  ← Angular build
-```
+| Path                    | Output From   |
+| ----------------------- | ------------- |
+| `dist/apps/api/`        | NestJS build  |
+| `dist/apps/ui/browser/` | Angular build |
 
-This ensures compatibility with Turbo caching and simplifies deployment steps.
+**Note:** Each build writes a `.touch` file here to help Turbo detect changes.
 
 ---
 
-## ⚙️ Turbo Workaround
+## 📦 libs/
 
-Due to how [Turborepo](https://turbo.build) tracks `outputs`, we use a custom script to **force tangible file changes** so the cache works reliably.
+You can place shared logic here, like:
 
-📄 `scripts/write-touch.js` → See full explanation in `./scripts/write-touch.doc.md`
-
-This script ensures a `.touch` file is updated during each build, which helps Turbo detect that the build truly produced an output.
-
----
-
-## ✅ Why read `write-touch.doc.md`?
-
-If you're using Turbo and wonder why:
-
-> `⚠️ no output files found for task ...`
-
-…then [write-touch.doc.md](./scripts/write-touch.doc.md) is for you.
-
-It explains:
-
-- Why this `.touch` trick is needed
-- How to integrate it in Angular/Nest builds
-- What the script does and how it helps Turbo caching
+* DTOs
+* Utilities
+* Guards / Decorators
+* Shared pipes, filters, etc.
 
 ---
 
-📌 **Crafted with love by Jordach & Aegis from Hard Machine™**
+## 🛠 scripts/
+
+Utility scripts.
+
+| File                 | Purpose                                          |
+| -------------------- | ------------------------------------------------ |
+| `write-touch.js`     | Force file output after builds for Turbo caching |
+| `write-touch.doc.md` | Documentation explaining the reason behind it    |
+
+---
+
+## ⚡ TurboRepo Integration
+
+You’re using TurboRepo to manage builds and caching between apps.
+
+* Outputs declared in `turbo.json`
+* Builds produce `.touch` files to enable smart caching
+* Dev tasks scoped by app (`pnpm --filter api dev`, etc.)
+
+---
+
+## ✅ Best Practices Followed
+
+* Centralized configuration (`@nestjs/config` + `Zod`)
+* Type-safe `.env` loading (`ZodConfigService`)
+* API versioning (`/v1`, `/v2`)
+* Swagger multi-doc setup
+* CI/CD and caching ready
+
+---
+
+📄 See [`api-starter-doc.md`](../apps/api/src/core/config/api-starter-doc.md)
+📄 See [`write-touch.doc.md`](../scripts/write-touch.doc.md)
+
+---
+
+
