@@ -88,7 +88,7 @@ After every build, a `.touch` file is written inside `dist/` folders to:
 * ✅ Trigger Turbo’s caching mechanism correctly
 * ✅ Avoid warnings like `no output files found for task...`
 
-📄 Learn more: [`scripts/write-touch.doc.md`](../../scripts/write-touch.doc.md)
+📄 Learn more: [`scripts/write-touch.doc.md`](../../../scripts/write-touch.doc.md)
 
 ---
 
