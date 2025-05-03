@@ -93,7 +93,7 @@ You’re using TurboRepo to manage builds and caching between apps.
 
 ---
 
-📄 See [`api-starter-doc.md`](/apps/api/src/config/api-starter-doc.md)
+📄 See [`api-starter-doc.md`](/apps/api/src/api-starter-doc.md)
 📄 See [`write-touch.doc.md`](./scripts/write-touch.doc.md)
 
 ---
