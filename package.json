@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "postbuild": "node scripts/write-touch.js",
-    "turbo:reset": "turbo kill && turbo clean && rm -rf .turbo && echo '♻️ Turbo reset complete.'"
+    "turbo:reset": "turbo kill && turbo clean && rm -rf .turbo && echo '♻️ Turbo reset complete.'",
     "build": "turbo run build",
     "dev": "turbo run dev --parallel",
     "lint": "turbo run lint && echo lint done.",
@@ -15,7 +15,7 @@
     "dev:ui": "pnpm --filter ui dev",
     "dev:api": "pnpm --filter api start:dev",
     "build:ui": "pnpm --filter ui build",
-    "build:api": "pnpm --filter api build"
+    "build:api": "pnpm --filter api build",
   },
   "keywords": [],
   "author": "",
