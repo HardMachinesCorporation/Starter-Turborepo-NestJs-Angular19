@@ -4,8 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "turbo run dev --parallel",
+    "postbuild": "node scripts/write-touch.js",
+    "turbo:reset": "turbo kill && turbo clean && rm -rf .turbo && echo '♻️ Turbo reset complete.'"
     "build": "turbo run build",
+    "dev": "turbo run dev --parallel",
     "lint": "turbo run lint && echo lint done.",
     "format": "turbo run format",
     "test": "turbo run test",
