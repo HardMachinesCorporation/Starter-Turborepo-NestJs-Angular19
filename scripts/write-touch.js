@@ -2,18 +2,29 @@ const fs = require('fs');
 const path = require('path');
 
 const targets = [
-  'dist/apps/api/.touch',
-  'dist/apps/ui/browser/.touch',
+  {
+    // NestJS App
+    touch: 'dist/apps/api/.touch',
+    check: 'dist/apps/api/main.js',
+  },
+  {
+    // Angular App (Browser Output)
+    touch: 'dist/apps/ui/browser/.touch',
+    check: 'dist/apps/ui/browser/index.html',
+  },
 ];
 
-for (const target of targets) {
-  const resolvedPath = path.resolve(__dirname, '..', target);
-  const dir = path.dirname(resolvedPath);
+for (const { touch, check } of targets) {
+  const resolvedTouch = path.resolve(__dirname, '..', touch);
+  const resolvedCheck = path.resolve(__dirname, '..', check);
+  const dir = path.dirname(resolvedTouch);
 
-  // 👉 Crée le dossier parent s’il n’existe pas
-  console.log(`✏️ Touching file: ${resolvedPath}`);
-  fs.mkdirSync(dir, { recursive: true });
-
-  // 📝 Écrit le fichier .touch avec contenu horodaté
-  fs.writeFileSync(resolvedPath, `Built: ${Date.now()}\n`);
+  if (fs.existsSync(resolvedCheck)) {
+    fs.mkdirSync(dir, { recursive: true });
+    fs.writeFileSync(resolvedTouch, `Built: ${Date.now()}\n`);
+    console.log(`✅ Build confirmed → Touch created: ${touch}`);
+  } else {
+    console.warn(`⚠️ WARNING: Expected output not found → ${check}`);
+    console.warn(`❌ Skipping touch file creation for: ${touch}`);
+  }
 }
