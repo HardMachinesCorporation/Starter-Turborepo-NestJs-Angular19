@@ -15,7 +15,7 @@
     "dev:ui": "pnpm --filter ui dev",
     "dev:api": "pnpm --filter api start:dev",
     "build:ui": "pnpm --filter ui build",
-    "build:api": "pnpm --filter api build",
+    "build:api": "pnpm --filter api build"
   },
   "keywords": [],
   "author": "",
