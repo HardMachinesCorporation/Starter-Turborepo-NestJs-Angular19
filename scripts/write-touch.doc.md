@@ -1,6 +1,3 @@
-Bien sûr Jordach 💥 Voici la version **mise à jour et améliorée** de ta documentation `write-touch.js` avec la logique de validation (`check`) intégrée.
-
----
 
 # 🎯 `write-touch.js`
 
