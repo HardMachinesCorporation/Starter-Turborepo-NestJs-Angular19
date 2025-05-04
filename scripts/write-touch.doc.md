@@ -1,3 +1,7 @@
+Bien sûr Jordach 💥 Voici la version **mise à jour et améliorée** de ta documentation `write-touch.js` avec la logique de validation (`check`) intégrée.
+
+---
+
 # 🎯 `write-touch.js`
 
 ---
@@ -34,7 +38,7 @@ To avoid this, we **force a file write** by generating a `.touch` file **after e
 
 ---
 
-### 🧠 TIP: Use this universal script
+### 🧠 TIP: Use this **robust, universal script**
 
 Place this in `scripts/write-touch.js`:
 
@@ -43,76 +47,93 @@ const fs = require('fs');
 const path = require('path');
 
 const targets = [
-  'dist/apps/api/.touch',
-  'dist/apps/ui/browser/.touch',
+  {
+    // NestJS App
+    touch: 'dist/apps/api/.touch',
+    check: 'dist/apps/api/main.js',
+  },
+  {
+    // Angular App (Browser Output)
+    touch: 'dist/apps/ui/browser/.touch',
+    check: 'dist/apps/ui/browser/index.html',
+  },
 ];
 
-for (const target of targets) {
-  const resolvedPath = path.resolve(__dirname, '..', target);
-  const dir = path.dirname(resolvedPath);
+for (const { touch, check } of targets) {
+  const resolvedTouch = path.resolve(__dirname, '..', touch);
+  const resolvedCheck = path.resolve(__dirname, '..', check);
+  const dir = path.dirname(resolvedTouch);
 
-  // 👉 Ensure the parent directory exists
-  fs.mkdirSync(dir, { recursive: true });
-
-  // 📝 Write a timestamp to the .touch file
-  fs.writeFileSync(resolvedPath, `Built: ${Date.now()}\n`);
+  if (fs.existsSync(resolvedCheck)) {
+    fs.mkdirSync(dir, { recursive: true });
+    fs.writeFileSync(
+      resolvedTouch,
+      `✅ Check OK: ${check}\nBuilt at: ${new Date().toISOString()}\n`
+    );
+    console.log(`✅ Build confirmed → Touch created: ${touch}`);
+  } else {
+    console.warn(`⚠️ WARNING: Expected output not found → ${check}`);
+    console.warn(`❌ Skipping touch file creation for: ${touch}`);
+  }
 }
 ```
-
----
-
-### 📜 Script Goal
-
-This script creates or overwrites `.touch` files **with a timestamp**, so Turbo can detect a **valid output**, which it would otherwise ignore if:
-
-- the file is empty,
-- unchanged from the last run,
-- or too small.
-
----
-
-### 🧠 Why this matters
-
-Turbo’s cache won't trigger unless the outputs change.
-
-So by writing a **timestamp** (`Date.now()`), we create a **guaranteed change** — unlocking proper caching behavior.
 
 ---
 
 ### 🧱 Code Breakdown
 
-```ts
-const fs = require('fs');                   // Node.js module to interact with the filesystem
-const path = require('path');               // Handles cross-platform path construction
+| Ligne de code          | Description                                       |
+| ---------------------- | ------------------------------------------------- |
+| `check`                | File expected to exist after a successful build   |
+| `.touch`               | File written if and only if `check` exists        |
+| `fs.existsSync(check)` | Prevents false-positive touches                   |
+| `Date().toISOString()` | Ensures every run generates a unique, real change |
 
-const targets = [
-  'dist/apps/api/.touch',
-  'dist/apps/ui/browser/.touch',
-];
+---
 
-for (const target of targets) {
-  const resolvedPath = path.resolve(__dirname, '..', target);
-  const dir = path.dirname(resolvedPath);
-  fs.mkdirSync(dir, { recursive: true });
-  fs.writeFileSync(resolvedPath, `Built: ${Date.now()}\n`);
-}
-```
+### 📜 Script Goal
+
+This script only writes a `.touch` file **if the real output exists**, protecting against false positives and ensuring valid Turbo cache outputs.
 
 ---
 
 ### ✅ Result
 
-Each time you run `npm run build`, you’ll get output like:
+When you build, you’ll see:
 
 ```
-dist/apps/api/.touch → Built: 1714751498091
-dist/apps/ui/browser/.touch → Built: 1714751498091
+✅ Build confirmed → Touch created: dist/apps/api/.touch
+✅ Build confirmed → Touch created: dist/apps/ui/browser/.touch
 ```
 
-> ✅ This dynamic content ensures Turbo sees a **real output**, enabling **correct caching** every time.
+If an output is missing:
+
+```
+⚠️ WARNING: Expected output not found → dist/apps/ui/browser/index.html
+❌ Skipping touch file creation for: dist/apps/ui/browser/.touch
+```
 
 ---
 
-**Crafted with love** ❤️  
-by **Jordach & Aegis** from **Hard Machine™**  
+### 🧠 Why this matters
+
+Turbo’s cache won’t activate unless declared outputs **exist** and **change**.
+This script guarantees both:
+
+* ✅ Real file presence check
+* 🔁 Dynamic `.touch` write on every build
+
+---
+
+### 🏭 Ready for production
+
+This script is **modular**, **extensible**, and designed for real-world monorepos.
+You can add new apps (Electron, Vite, etc.) by just updating the `targets` array.
+
+---
+
+**Crafted with resilience ⚒️**
+by **Jordach & Aegis** for **Hard Machine™**
 **"We code. We build. We industrialize."**
+
+
